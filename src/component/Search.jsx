@@ -1,45 +1,42 @@
-import React, { Component } from 'react'
+import React,{useContext, useState} from 'react'
+import { UserContext } from '../Context/UserContext'
+import { AlertContext } from '../Context/AlertContext'
 
-export class Search extends Component {
-  constructor(props) {
-    super(props)
+ const Search = () =>  {
+  const [keyword, setKeyword] = useState("")
+  const{searchUsers,users,clearResult}=useContext(UserContext)
+  const {displayError} = useContext(AlertContext)
+
   
-    this.state = {
-       keyword:''
-    }
-  }
-  onChangeInput=(e) => {
+ const onChangeInput=(e) => {
     e.preventDefault()
-    this.setState({
-      keyword:e.target.value
-    })
+    setKeyword(e.target.value)
+  
   }
-  onSubmit=(e) => {
+const  onSubmit=(e) => {
     e.preventDefault()
-    if(this.state.keyword===''){
-      this.props.displayError('Anahtar Kelime Giriniz!','danger')
+    if(keyword===''){
+     displayError('Anahtar Kelime Giriniz!','danger')
     }else{
-      this.props.searchUsers(this.state.keyword)
-      this.setState({
-        keyword:''
-      })
+     searchUsers(keyword)
+      setKeyword("")
     }
    
   }
-  render() {
+
     return (
       <div className="container my-3">
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={onSubmit}>
            <div className="input-group">
-                <input value={this.state.keyword} onChange={this.onChangeInput} type="text" className='form-control' placeholder='search'/>
+                <input value={keyword} onChange={onChangeInput} type="text" className='form-control' placeholder='search'/>
                 <button className="btn btn-primary" type='submit'>Ara</button>
             </div>     
         </form>
-        {this.props.showClearBtn && <button onClick={this.props.clearResult} className="btn btn-outline-danger mt-2 btn-block">Temizle</button> }
+        {users.length>0 && <button onClick={clearResult} className="btn btn-outline-danger mt-2 btn-block">Temizle</button> }
        
       </div>
     )
   }
-}
+
 
 export default Search

@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export class User extends Component {
+const User =(props) =>  {
   
       
-  render() {
-    const {avatar_url,html_url,login} = this.props.users
+
+    const {avatar_url,html_url,login} = props.users
     return (
       <div className="card mb-3">
         <div className="row g-0">
@@ -24,6 +24,6 @@ export class User extends Component {
       </div>
     )
   }
-}
+
 
 export default User
